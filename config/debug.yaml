@@ -1,0 +1,36 @@
+model_path: pretrained_model/fudoki
+text_embedding_path: pretrained_model/fudoki/text_embedding.pt
+pretrain_model_path: pretrained_model/wam-flow/navsim
+
+stage: s2
+txt_max_length: 500
+new_embedding_path: ""
+
+pretrain_path: ""
+ckpt_path: ""
+train_llm_emb: false
+
+data_list: [
+  "data/navsim_debug.jsonl",
+]
+
+mixed_precision: "no" 
+accumulate_grad_batches: 1
+max_grad_norm: 1.0
+seed: 42
+source_distribution: "uniform"
+vocab_size: 102400
+batch_size: 1
+dataloader_num_workers: 8
+learning_rate: 5e-6
+lr_scheduler_type: "cosine"   # "constant", "cosine"
+lr_warmup_steps: 500
+max_train_steps: 40000
+max_epochs: 100
+uncond_prob: 0
+use_quantize: true
+random_seed: false
+l2_loss_weight: 0
+
+checkpointing_steps: 4000
+checkpoints_total_limit: 50

@@ -1,0 +1,53 @@
+model_path: pretrained_model/fudoki
+pretrain_model_path: /cache/xyf_model/
+text_embedding_path: pretrained_model/fudoki/text_embedding.pt
+
+stage: s2
+txt_max_length: 500
+new_embedding_path: ""
+
+pretrain_path: ""
+ckpt_path: ""
+train_llm_emb: false
+
+data_list: [
+  "path/to/llava_v1_5_mix665k_2.jsonl"
+  "path/to/dataset_coda_lm.jsonl",
+  "path/to/dataset_drivegpt4.jsonl",
+  "path/to/dataset_lingoqa.jsonl",
+  "path/to/dataset_maplm.jsonl",
+  "path/to/dataset_nuscenes_qa.jsonl",
+  "path/to/dataset_omnidrive.jsonl",
+  "path/to/dataset_senna.jsonl",
+  "path/to/dataset_talk2car.jsonl",
+  "path/to/drivelm_change_box_type.jsonl",
+
+  "path/to/nuplan_recogdrive.jsonl",
+  "path/to/navsim_recogdrive.jsonl",
+  "path/to/navsim_recogdrive.jsonl",
+
+  "path/to/navsim_668k.jsonl",
+  "path/to/navsim_103k.jsonl",
+  "path/to/nuscenes_train.jsonl",
+]
+
+mixed_precision: "no" 
+accumulate_grad_batches: 4
+max_grad_norm: 1.0
+seed: 42
+source_distribution: "uniform"
+vocab_size: 102400
+batch_size: 1
+dataloader_num_workers: 8
+learning_rate: 1e-5
+lr_scheduler_type: "constant"     # cosine, constant
+lr_warmup_steps: 0
+max_train_steps: 80000
+max_epochs: 10
+uncond_prob: 0
+use_quantize: true
+random_seed: true
+l2_loss_weight: 0
+
+checkpointing_steps: 2500
+checkpoints_total_limit: 50
