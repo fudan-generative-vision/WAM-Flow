@@ -15,12 +15,42 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: Check requirements.txt exists
+        id: check_req
+        run: |
+          if [ -f requirements.txt ]; then
+            echo "requirements_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "requirements_exists=false" >> $GITHUB_OUTPUT
+          fi
+          if [ -f pyproject.toml ]; then
+            echo "pyproject_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "pyproject_exists=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Install dependencies by requirements.txt
+        id: install_deps_req
+        if: ${{ steps.check_req.outputs.requirements_exists == 'true' }}
         run: |
           python -m pip install --upgrade pylint
           python -m pip install --upgrade isort
           python -m pip install -r requirements.txt
+          echo "dependencies_installed=true" >> $GITHUB_OUTPUT
       - name: Analysing the code with pylint
+        if: ${{ steps.check_req.outputs.requirements_exists == 'true' }}
         run: |
           isort $(git ls-files '*.py') --check-only --diff
           pylint $(git ls-files '*.py')
+      - name: Install dependencies by uv
+        id: install_deps_uv
+        if: ${{ steps.check_req.outputs.pyproject_exists == 'true' }}
+        run: |
+          python -m pip install uv
+          uv sync
+          uv pip install pylint
+          uv pip install isort
+      - name: Analysing the code with pylint
+        if: ${{ steps.check_req.outputs.pyproject_exists == 'true' }}
+        run: |
+          uv run isort $(git ls-files '*.py') --check-only --diff
+          uv run pylint $(git ls-files '*.py')
