@@ -231,3 +231,4 @@ navsim_v1
 nuscenes
 extra-info/
 pretrained_model/
+.DS_Store
