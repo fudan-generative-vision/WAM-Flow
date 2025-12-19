@@ -44,14 +44,11 @@
 ![teaser](assets/Figure_1.png)
 
 ## 🏆 Qualitative Results on NAVSIM
-### NAVSIM-v1 benchmark results
 ![navsim-v1](assets/navsim-v1.png)
-### NAVSIM-v2 benchmark results
 ![navsim-v2](assets/navsim-v2.png)
 
 ## 🔧️ Framework
 ![framework](assets/Figure_2.png)
-Our method takes as input a front-view image, a natural-language navigation command with a system prompt, and the ego-vehicle states, and outputs an 8-waypoint future trajectory spanning 4 seconds through parallel denoising. The model is first trained via supervised fine-tuning to learn accurate trajectory prediction. We then apply simulatorguided GRPO to further optimize closed-loop behavior. The GRPO reward function integrates safety constraints (collision avoidance, drivable-area compliance) with performance objectives (ego-progress, time-to-collision, comfort).
 
 ## 📝 Citation
 
@@ -68,7 +65,7 @@ If you find our work useful for your research, please consider citing the paper:
 
 ## ⚠️ Social Risks and Mitigations
 
-The integration of Vision-Language-Action models into autonomous driving introduces ethical challenges, particularly regarding the opacity of neural decision-making and its impact on road safety. To mitigate these risks, it is imperative to implement explainable AI frameworks and robust safe protocols that ensure predictable vehicle behavior in long-tailed scenarios. Furthermore, addressing concerns over data privacy and public surveillance requires transparent data governance and rigorous de-identification practices. By prioritizing safety-critical alignment and ethical compliance, this research promotes the responsible development and deployment of VLA-based autonomous systems.
+The development of portrait image animation technologies driven by audio inputs poses social risks, such as the ethical implications of creating realistic portraits that could be misused for deepfakes. To mitigate these risks, it is crucial to establish ethical guidelines and responsible use practices. Privacy and consent concerns also arise from using individuals' images and voices. Addressing these involves transparent data usage policies, informed consent, and safeguarding privacy rights. By addressing these risks and implementing mitigations, the research aims to ensure the responsible and ethical development of this technology.
 
 ## 🤗 Acknowledgements
 We gratefully acknowledge the contributors to the [Janus](https://github.com/deepseek-ai/Janus), [FUDOKI](https://github.com/fudoki-hku/FUDOKI) and [flow_matching](https://github.com/facebookresearch/flow_matching) repositories, whose commitment to open source has provided us with their excellent codebases and pretrained models.
