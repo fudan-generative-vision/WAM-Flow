@@ -27,17 +27,23 @@
 </div>
 <br>
 
+
+
 ## 📰 News
 
 - **`2025/12/06`**: 🎉🎉🎉 Paper submitted on [Arxiv](https://arxiv.org/pdf/2512.06112).
+
+
 
 ## 📅️ Roadmap
 
 | Status | Milestone                                                                                             |    ETA     |
 | :----: | :----------------------------------------------------------------------------------------------------: | :--------: |
-|   🚀   | **[Releasing the inference source code](https://github.com/fudan-generative-vision/WAM-Flow)** | 2025.12.21        |
-|   🚀   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**              | TBD        |
-|   🚀   | **[Releasing the training scripts](#training)**                                                          | TBD        |
+|   ✅   | **[Release the SFT and inference code](https://github.com/fudan-generative-vision/WAM-Flow)**   | 2025.12.19 |
+|   🚀   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | TBD        |
+|   🚀   | **[Release the evaluation code](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | TBD |
+|   🚀   | **[Release the RL code](https://github.com/fudan-generative-vision/WAM-Flow)**   | TBD |
+|   🚀   | **[Release the pre-processed training data](#training)**                                       | TBD        |
 
 
 ## 📸 Showcase
@@ -45,13 +51,67 @@
 
 ## 🏆 Qualitative Results on NAVSIM
 ### NAVSIM-v1 benchmark results
-![navsim-v1](assets/navsim-v1.png)
+<div style="text-align: center;">
+  <img src="assets/navsim-v1.png" alt="navsim-v1" width="70%" />
+</div>
+
 ### NAVSIM-v2 benchmark results
-![navsim-v2](assets/navsim-v2.png)
+<div style="text-align: center;">
+<img src="assets/navsim-v2.png" alt="navsim-v2" width="70%" />
+</div>
+
+
 
 ## 🔧️ Framework
 ![framework](assets/Figure_2.png)
 Our method takes as input a front-view image, a natural-language navigation command with a system prompt, and the ego-vehicle states, and outputs an 8-waypoint future trajectory spanning 4 seconds through parallel denoising. The model is first trained via supervised fine-tuning to learn accurate trajectory prediction. We then apply simulatorguided GRPO to further optimize closed-loop behavior. The GRPO reward function integrates safety constraints (collision avoidance, drivable-area compliance) with performance objectives (ego-progress, time-to-collision, comfort).
+
+
+## Preparation
+
+### Environment
+```sh
+conda create --name wam-flow python=3.10
+conda activate wam-flow
+pip install -r requirements.txt
+```
+
+### Checkpoint
+
+
+### Data
+
+
+
+## Training
+
+### Pretraining
+
+### SFT
+
+### RL
+
+### Debug
+```sh
+sh script/sft_debug.sh
+```
+
+
+## Inference
+```sh
+sh script/infer.sh
+```
+
+
+## Evaluation
+
+### NAVSIM-v1
+
+### NAVSIM-v2
+
+### nuScenes
+
+
 
 ## 📝 Citation
 
@@ -66,9 +126,13 @@ If you find our work useful for your research, please consider citing the paper:
 }
 ```
 
+
+
 ## ⚠️ Social Risks and Mitigations
 
 The integration of Vision-Language-Action models into autonomous driving introduces ethical challenges, particularly regarding the opacity of neural decision-making and its impact on road safety. To mitigate these risks, it is imperative to implement explainable AI frameworks and robust safe protocols that ensure predictable vehicle behavior in long-tailed scenarios. Furthermore, addressing concerns over data privacy and public surveillance requires transparent data governance and rigorous de-identification practices. By prioritizing safety-critical alignment and ethical compliance, this research promotes the responsible development and deployment of VLA-based autonomous systems.
 
+
+
 ## 🤗 Acknowledgements
-We gratefully acknowledge the contributors to the [Janus](https://github.com/deepseek-ai/Janus), [FUDOKI](https://github.com/fudoki-hku/FUDOKI) and [flow_matching](https://github.com/facebookresearch/flow_matching) repositories, whose commitment to open source has provided us with their excellent codebases and pretrained models.
+We gratefully acknowledge the contributors to the [Recogdrive](https://github.com/xiaomi-research/recogdrive), [Janus](https://github.com/deepseek-ai/Janus), [FUDOKI](https://github.com/fudoki-hku/FUDOKI) and [flow_matching](https://github.com/facebookresearch/flow_matching) repositories, whose commitment to open source has provided us with their excellent codebases and pretrained models.
