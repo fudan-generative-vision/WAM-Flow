@@ -23,14 +23,14 @@
 <div align='center'>
     <a href='https://github.com/fudan-generative-vision/WAM-Flow'><img src='https://img.shields.io/github/stars/fudan-generative-vision/WAM-Flow?style=social'></a>
     <a href='https://arxiv.org/abs/2512.06112'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
-    <!-- <a href='https://huggingface.co/fudan-generative-ai/WAM-Flow'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a> -->
+    <a href='https://huggingface.co/fudan-generative-ai/WAM-Flow'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a>
 </div>
 <br>
 
 
 
 ## 📰 News
-
+- **`2026/02/01`**: 🎉🎉🎉 Release the pretrained models on [Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow).
 - **`2025/12/06`**: 🎉🎉🎉 Paper submitted on [Arxiv](https://arxiv.org/pdf/2512.06112).
 
 
@@ -40,7 +40,7 @@
 | Status | Milestone                                                                                             |    ETA     |
 | :----: | :----------------------------------------------------------------------------------------------------: | :--------: |
 |   ✅   | **[Release the SFT and inference code](https://github.com/fudan-generative-vision/WAM-Flow)**   | 2025.12.19 |
-|   🚀   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | TBD        |
+|   ✅   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | 2026.02.01        |
 |   🚀   | **[Release the evaluation code](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | TBD |
 |   🚀   | **[Release the RL code](https://github.com/fudan-generative-vision/WAM-Flow)**   | TBD |
 |   🚀   | **[Release the pre-processed training data](#training)**                                       | TBD        |
