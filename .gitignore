@@ -223,12 +223,11 @@ fusion_result.json
 *output*
 *kernel_meta/
 data/*.json
-maps
 data/metric_cache
-data/maps
 tmp
 navsim_v1
 nuscenes
 extra-info/
 pretrained_model/
 .DS_Store
+exp/

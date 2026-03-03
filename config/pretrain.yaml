@@ -11,7 +11,7 @@ ckpt_path: ""
 train_llm_emb: false
 
 data_list: [
-  "path/to/llava_v1_5_mix665k_2.jsonl"
+  "path/to/llava_v1_5_mix665k_2.jsonl",
   "path/to/dataset_coda_lm.jsonl",
   "path/to/dataset_drivegpt4.jsonl",
   "path/to/dataset_lingoqa.jsonl",

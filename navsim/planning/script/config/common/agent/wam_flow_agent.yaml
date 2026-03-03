@@ -1,0 +1,19 @@
+_target_: navsim.agents.wam_flow_agent.WamFlowAgent
+_convert_: 'all'
+
+trajectory_sampling:
+  _target_: nuplan.planning.simulation.trajectory.trajectory_sampling.TrajectorySampling
+  _convert_: 'all'
+  time_horizon: 4
+  interval_length: 0.5
+
+
+fudoki_path: "pretrained_model/fudoki"
+wam_flow_path: "pretrained_model/wam-flow"
+text_embedding_path: "pretrained_model/fudoki/text_embedding.pt"
+image_embedding_path: "pretrained_model/fudoki/image_embedding.pt"
+heading_mlp_path: "pretrained_model/wam-flow/best_model_epoch95.pt"
+
+discrete_fm_steps: 5
+seed: 99
+dtype: default

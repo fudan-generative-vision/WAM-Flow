@@ -123,15 +123,13 @@ class MixtureDiscreteSoftmaxProbPath(ProbPath):
         self.c = 3
         assert mode in ['image', 'text'], f"Unsupported mode probability path: {mode}"
         self.mode = mode
-        self.embedding_path = embedding_path
         self.embedding = self.get_embedding(embedding_path)
         self.embedding.weight.requires_grad = False
-        self.embedding = self.embedding
         torch.cuda.empty_cache()
 
     def get_embedding(self, embedding_path):
         # with torch.serialization.safe_globals([torch.nn.modules.sparse.Embedding]):
-        embedding = torch.load(embedding_path, map_location="cpu")
+        embedding = torch.load(embedding_path, map_location="cpu", weights_only=False)
         embedding.requires_grad_(False)
         torch.cuda.empty_cache()
         return embedding.cuda()

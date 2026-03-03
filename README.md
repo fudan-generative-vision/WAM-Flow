@@ -3,7 +3,7 @@
     <a href='https://github.com/YoucanBaby' target='_blank'>Yifang Xu</a><sup>1*</sup>&emsp;
     <a href='https://cuijh26.github.io/' target='_blank'>Jiahao Cui</a><sup>1*</sup>&emsp;
     <a href='https://github.com/fudan-generative-vision/WAM-Flow' target='_blank'>Feipeng Cai</a><sup>2*</sup>&emsp;
-    <a href='https://github.com/SSSSSSuger' target='_blank'>Zhihao Zhu</a><sup>1</sup>&emsp;
+    <a href='https://github.com/SSSSSSuger' target='_blank'>Zhihao Zhu</a><sup>1*</sup>&emsp;
     <a href='https://github.com/NinoNeumann' target='_blank'>Hanlin Shang</a><sup>1</sup>&emsp;
     <a href='https://github.com/isan089' target='_blank'>Shan Luan</a><sup>1</sup>&emsp;
 </div>
@@ -30,6 +30,7 @@
 
 
 ## 📰 News
+- **`2026/02/21`**: 🎉🎉🎉 WAM-Flow is accepted by [CVPR 2026](https://cvpr.thecvf.com/).
 - **`2026/02/01`**: 🎉🎉🎉 Release the pretrained models on [Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow).
 - **`2025/12/06`**: 🎉🎉🎉 Paper submitted on [Arxiv](https://arxiv.org/pdf/2512.06112).
 
@@ -41,7 +42,7 @@
 | :----: | :----------------------------------------------------------------------------------------------------: | :--------: |
 |   ✅   | **[Release the SFT and inference code](https://github.com/fudan-generative-vision/WAM-Flow)**   | 2025.12.19 |
 |   ✅   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | 2026.02.01        |
-|   🚀   | **[Release the evaluation code](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | TBD |
+|   ✅   | **[Release the evaluation code](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | 2026.03.03 |
 |   🚀   | **[Release the RL code](https://github.com/fudan-generative-vision/WAM-Flow)**   | TBD |
 |   🚀   | **[Release the pre-processed training data](#training)**                                       | TBD        |
 
@@ -82,13 +83,14 @@ cd WAM-Flow
 Install dependencies:
 
 ```sh
-conda create --name wam-flow python=3.10
+conda create --name wam-flow python=3.9
 conda activate wam-flow
-pip install -r requirements.txt
+pip install -e ./nuplan-devkit
+pip install -e .
 ```
 
 
-### Model Download
+### Model
 
 Download models using huggingface-cli:
 
@@ -98,6 +100,24 @@ huggingface-cli download fudan-generative-ai/WAM-Flow --local-dir ./pretrained_m
 huggingface-cli download LucasJinWang/FUDOKI --local-dir ./pretrained_model/fudoki
 ```
 
+
+### Dataset
+
+**NAVSIM**
+
+Please [download NAVSIM dataset](https://github.com/autonomousvision/navsim/blob/main/docs/install.md#2-download-the-dataset) and [run metric caching](https://github.com/autonomousvision/navsim/blob/main/docs/cache.md).
+
+
+
+
+### Evaluation
+
+**NAVSIM**
+
+```sh
+# Please change NAVSIM and METRIC_CACHE path
+sh scripts/evaluation/run_wam_flow_agent_pdm_score_evaluation.sh
+```
 
 
 ### Inference
@@ -137,4 +157,4 @@ The integration of Vision-Language-Action models into autonomous driving introdu
 
 
 ## 🤗 Acknowledgements
-We gratefully acknowledge the contributors to the [Recogdrive](https://github.com/xiaomi-research/recogdrive), [Janus](https://github.com/deepseek-ai/Janus), [FUDOKI](https://github.com/fudoki-hku/FUDOKI) and [flow_matching](https://github.com/facebookresearch/flow_matching) repositories, whose commitment to open source has provided us with their excellent codebases and pretrained models.
+We gratefully acknowledge the contributors to the [WAM-Diff](https://github.com/fudan-generative-vision/WAM-Diff), [RecogDrive](https://github.com/xiaomi-research/recogdrive), [Janus](https://github.com/deepseek-ai/Janus), [FUDOKI](https://github.com/fudoki-hku/FUDOKI) and [flow_matching](https://github.com/facebookresearch/flow_matching) repositories, whose commitment to open source has provided us with their excellent codebases and pretrained models.
