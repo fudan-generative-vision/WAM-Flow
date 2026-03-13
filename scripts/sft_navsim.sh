@@ -1,10 +1,10 @@
 #!/bin/bash
 
 NUM_NODES=1
-NUM_GPUS=1
+NUM_GPUS=8
 
 config=config/sft_navsim.yaml
-output_dir=output/train/debug
+output_dir=output/train/navsim
 
 accelerate launch \
   --config_file ./config/accelerate_config_ds2.yaml \

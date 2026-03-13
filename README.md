@@ -40,11 +40,11 @@
 
 | Status | Milestone                                                                                             |    ETA     |
 | :----: | :----------------------------------------------------------------------------------------------------: | :--------: |
-|   ✅   | **[Release the SFT and inference code](https://github.com/fudan-generative-vision/WAM-Flow)**   | 2025.12.19 |
-|   ✅   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | 2026.02.01        |
-|   ✅   | **[Release the evaluation code](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | 2026.03.03 |
-|   🚀   | **[Release the RL code](https://github.com/fudan-generative-vision/WAM-Flow)**   | TBD |
-|   🚀   | **[Release the pre-processed training data](#training)**                                       | TBD        |
+|   ✅   | **[Release the SFT and inference code]()**   | 2025.12.19 |
+|   ✅   | **[Pretrained models on Huggingface](https://huggingface.co/fudan-generative-ai/WAM-Flow)**    | 2026.02.01  |
+|   ✅   | **[Release the evaluation code]()**    | 2026.03.03 |
+|   ✅   | **[Release the SFT data](https://huggingface.co/fudan-generative-ai/WAM-Flow/tree/main/data)**                                       | 2026.03.12  |
+|   🚀   | **[Release the RL code]()**   | TBD |
 
 
 ## 📸 Showcase
@@ -98,6 +98,7 @@ Download models using huggingface-cli:
 pip install "huggingface_hub[cli]"
 huggingface-cli download fudan-generative-ai/WAM-Flow --local-dir ./pretrained_model/wam-flow
 huggingface-cli download LucasJinWang/FUDOKI --local-dir ./pretrained_model/fudoki
+mv pretrained_model/wam-flow/data/* data/
 ```
 
 
@@ -129,6 +130,14 @@ sh script/infer.sh
 
 ### Training
 
+**NAVSIM**
+
+```bash
+sh script/sft_navsim.sh
+```
+
+**Debug**
+
 ```bash
 sh script/sft_debug.sh
 ```
@@ -140,11 +149,11 @@ sh script/sft_debug.sh
 If you find our work useful for your research, please consider citing the paper:
 
 ```
-@article{xu2025wam,
+@inproceedings{xu2026wamflow,
   title={WAM-Flow: Parallel Coarse-to-Fine Motion Planning via Discrete Flow Matching for Autonomous Driving},
-  author={Xu, Yifang and Cui, Jiahao and Cai, Feipeng and Zhu, Zhihao and Shang, Hanlin and Luan, Shan and Xu, Mingwang and Zhang, Neng and Li, Yaoyi and Cai, Jia and others},
-  journal={arXiv preprint arXiv:2512.06112},
-  year={2025}
+  author={Xu, Yifang and Cui, Jiahao and Cai, Feipeng and Zhu, Zhihao and Shang, Hanlin and Luan, Shan and Xu, Mingwang and Zhang, Neng and Li, Yaoyi and Cai, Jia and Zhu, Siyu},
+  booktitle={CVPR},
+  year={2026}
 }
 ```
 

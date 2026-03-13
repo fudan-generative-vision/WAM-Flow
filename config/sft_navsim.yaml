@@ -11,7 +11,7 @@ ckpt_path: ""
 train_llm_emb: false
 
 data_list: [
-  "path/to/navsim_668k.jsonl",
+  "data/navsim_668k.jsonl",
 ]
 
 mixed_precision: "no" 
