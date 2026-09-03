@@ -80,11 +80,14 @@ def training_step(
     data_info,
     path,
     time_epsilon = 0.001,
-    loss_fn = CrossEntropyLoss(),
+    loss_fn = None,
     stage="s1",
     vl_chat_processor=None,
     args=None,
 ):
+    if loss_fn is None:
+        loss_fn = CrossEntropyLoss()
+
     x_0 = source_distribution.sample_like(x_1)
     t = torch.rand(x_1.shape[0], device=x_1.device) * (1.0 - time_epsilon)
 
@@ -98,27 +101,41 @@ def training_step(
         x_t = None
 
     # text_token_mask==1 ==> generated text token
-    x_t = x_t * data_info['text_token_mask'] + x_1 * (1 - data_info['text_token_mask'])
+    text_token_mask = data_info['text_token_mask'].to(device=x_t.device, dtype=x_t.dtype)
+    x_t = x_t * text_token_mask + x_1 * (1 - text_token_mask)
     data_info['understanding_img'] = data_info['understanding_img'].to(dtype=model.dtype)
 
     _, txt_logits = model(x_t, data_info)
 
-    b, _, c = txt_logits.shape
-    mask = data_info['text_token_mask'].unsqueeze(-1).bool()
-    txt_logits = txt_logits.masked_select(mask)
-    txt_logits = txt_logits.view(b, -1, c)
-    x_1 = x_1.masked_select(mask.squeeze(-1)).view(b, -1)
+    # Select supervised text positions as a flat set.  The number of text
+    # tokens can differ between samples, so reshaping the masked result to
+    # ``(batch, -1)`` silently assumes equal lengths and can either fail or
+    # pair logits with the wrong targets.
+    mask = text_token_mask.bool()
+    txt_logits = txt_logits[mask]
+    x_1 = x_1[mask]
 
-    loss = ce_loss = loss_fn(txt_logits.flatten(0, 1), x_1.flatten(0, 1)).mean()
+    loss = ce_loss = loss_fn(txt_logits, x_1).mean()
     loss_dict = {"ce_loss": ce_loss.detach().item()}
 
-    if stage == "s2":
+    numeric_attrs = (
+        "num_start_id",
+        "num_end_id",
+        "min_num",
+        "max_num",
+        "interval",
+    )
+    has_numeric_tokenizer = vl_chat_processor is not None and all(
+        hasattr(vl_chat_processor, attr) for attr in numeric_attrs
+    )
+    l2_loss_weight = getattr(args, "l2_loss_weight", 0) if args is not None else 0
+    if stage == "s2" and has_numeric_tokenizer:
         start_mask = x_1 >= vl_chat_processor.num_start_id
         end_mask = x_1 <= vl_chat_processor.num_end_id - 1
         action_mask = start_mask & end_mask
 
         if action_mask.any():
-            if args.l2_loss_weight > 0:
+            if l2_loss_weight > 0:
                 pred_probabilities = F.softmax(txt_logits, dim=-1)
                 pred_ids = torch.argmax(pred_probabilities, dim=-1)
                 pred_num_ids = pred_ids.masked_select(action_mask)
@@ -128,7 +145,7 @@ def training_step(
                 tgt_num_ids = x_1.masked_select(action_mask) # [N]
                 tgt_nums = vl_chat_processor.min_num + (tgt_num_ids - vl_chat_processor.num_start_id) * vl_chat_processor.interval
 
-                l2_loss = args.l2_loss_weight + F.mse_loss(pred_nums, tgt_nums, reduction="mean")
+                l2_loss = l2_loss_weight * F.mse_loss(pred_nums, tgt_nums, reduction="mean")
                 loss = loss + l2_loss
                 loss_dict["l2_loss"] = l2_loss.detach().item()
 
@@ -186,6 +203,8 @@ def main(args):
 
     # prepare dataset
     vl_chat_processor = VLChatProcessor.from_pretrained(args.model_path)
+    num_tokens = []
+    num_tokens_length = 0
     if args.use_quantize:
         origin_len = len(vl_chat_processor.tokenizer)
         num_tokens = [f"{x:.2f}" for x in np.linspace(-100, 100, 20001)]
